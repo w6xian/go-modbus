@@ -3,14 +3,14 @@
 ## NOTE: 已归档, 不再维护, 放弃License. 有需要的可以自由分发
 modbus write in pure go, support rtu,ascii,tcp master library,also support tcp slave.
 
-[![GoDoc](https://godoc.org/github.com/things-go/go-modbus?status.svg)](https://godoc.org/github.com/things-go/go-modbus)
-[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/things-go/go-modbus/v2?tab=doc)
-[![codecov](https://codecov.io/gh/things-go/go-modbus/branch/master/graph/badge.svg)](https://codecov.io/gh/things-go/go-modbus)
-![Action Status](https://github.com/things-go/go-modbus/workflows/Go/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/things-go/go-modbus)](https://goreportcard.com/report/github.com/things-go/go-modbus)
-[![Licence](https://img.shields.io/github/license/things-go/go-modbus)](https://raw.githubusercontent.com/things-go/go-modbus/master/LICENSE)
-[![Tag](https://img.shields.io/github/v/tag/things-go/go-modbus)](https://github.com/things-go/go-modbus/tags)
-[![Sourcegraph](https://sourcegraph.com/github.com/things-go/go-modbus/-/badge.svg)](https://sourcegraph.com/github.com/things-go/go-modbus?badge)
+[![GoDoc](https://godoc.org/github.com/w6xian/go-modbus?status.svg)](https://godoc.org/github.com/w6xian/go-modbus)
+[![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/w6xian/go-modbus/v2?tab=doc)
+[![codecov](https://codecov.io/gh/w6xian/go-modbus/branch/master/graph/badge.svg)](https://codecov.io/gh/w6xian/go-modbus)
+![Action Status](https://github.com/w6xian/go-modbus/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/w6xian/go-modbus)](https://goreportcard.com/report/github.com/w6xian/go-modbus)
+[![Licence](https://img.shields.io/github/license/w6xian/go-modbus)](https://raw.githubusercontent.com/w6xian/go-modbus/master/LICENSE)
+[![Tag](https://img.shields.io/github/v/tag/w6xian/go-modbus)](https://github.com/w6xian/go-modbus/tags)
+[![Sourcegraph](https://sourcegraph.com/github.com/w6xian/go-modbus/-/badge.svg)](https://sourcegraph.com/github.com/w6xian/go-modbus?badge)
 
 
 ### Supported formats
@@ -30,12 +30,12 @@ modbus write in pure go, support rtu,ascii,tcp master library,also support tcp s
 
 Use go get.
 ```bash
-    go get github.com/things-go/go-modbus
+    go get github.com/w6xian/go-modbus
 ```
 
 Then import the package into your own code.
 ```bash
-    import modbus "github.com/things-go/go-modbus"
+    import modbus "github.com/w6xian/go-modbus"
 ```
 
 ### Supported functions
@@ -73,7 +73,7 @@ import (
 
 	"github.com/goburrow/serial"
 
-	modbus "github.com/things-go/go-modbus"
+	modbus "github.com/w6xian/go-modbus"
 )
 
 func main() {
@@ -120,7 +120,7 @@ import (
 	"fmt"
 	"time"
 
-	modbus "github.com/things-go/go-modbus"
+	modbus "github.com/w6xian/go-modbus"
 )
 
 func main() {
@@ -154,7 +154,7 @@ modbus TCP server see [example](_examples/server_tcp)
 package main
 
 import (
-	modbus "github.com/things-go/go-modbus"
+	modbus "github.com/w6xian/go-modbus"
 )
 
 func main() {
@@ -191,7 +191,7 @@ func main() {
 ### JetBrains OS licenses
 go-modbus had been being developed with GoLand under the free JetBrains Open Source license(s) granted by JetBrains s.r.o., hence I would like to express my thanks here.
 
-<a href="https://www.jetbrains.com/?from=things-go/go-modbus" target="_blank"><img src="https://github.com/thinkgos/thinkgos/blob/master/asserts/jetbrains-variant-4.svg" width="200" align="middle"/></a>
+<a href="https://www.jetbrains.com/?from=w6xian/go-modbus" target="_blank"><img src="https://github.com/thinkgos/thinkgos/blob/master/asserts/jetbrains-variant-4.svg" width="200" align="middle"/></a>
 
 ### Donation
 
