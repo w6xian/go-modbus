@@ -228,13 +228,14 @@ func calculateResponseLength(adu []byte) int {
 // verify confirms valid data(including slaveID,funcCode,response data)
 func verify(reqSlaveID, rspSlaveID uint8, reqPDU, rspPDU ProtocolDataUnit) error {
 	switch {
-	case reqSlaveID != rspSlaveID: // Check slaveID same
+	// 0xFF 广播地址，用于读取地址或者写入地址
+	case reqSlaveID != rspSlaveID && reqSlaveID != 0xFF: // Check slaveID same
 		return fmt.Errorf("modbus: response slave id '%v' does not match request '%v'", rspSlaveID, reqSlaveID)
 
 	case rspPDU.FuncCode != reqPDU.FuncCode: // Check correct function code returned (exception)
 		return responseError(rspPDU)
 
-	case rspPDU.Data == nil || len(rspPDU.Data) == 0: // check Empty response
+	case len(rspPDU.Data) == 0: // check Empty response
 		return fmt.Errorf("modbus: response data is empty")
 	}
 	return nil
