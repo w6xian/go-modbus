@@ -57,6 +57,67 @@ bit access:
 *   Mask Write Register
 *   Read FIFO Queue
 
+### clientLock design
+
+`client` uses a custom `clientLock` instead of `sync.RWMutex`.
+Its goal is not to allow concurrent readers. Its goal is to serialize access to the shared Modbus bus/connection while still keeping a clear distinction between read operations (`RLock`) and write operations (`Lock`).
+
+Key points:
+
+- `RLock` means "enter read operation mode", not "shared reader mode"
+- `Lock` means "enter write operation mode"
+- only one goroutine can hold the bus at a time
+- pending writers block new readers to avoid writer starvation
+- nested locking is allowed for the same goroutine
+- upgrading from `RLock` to `Lock` is rejected
+
+State flow:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+
+    Idle --> ReadActive: RLock()
+    Idle --> WriteActive: Lock()
+
+    ReadActive --> ReadActive: same goroutine RLock()\ndepth++
+    WriteActive --> WriteActive: same goroutine Lock()\ndepth++
+    WriteActive --> WriteActive: same goroutine RLock()\ndepth++
+
+    ReadActive --> Idle: RUnlock()\ndepth==0
+    WriteActive --> Idle: Unlock()\ndepth==0
+
+    ReadActive --> ReadActive: RUnlock()/depth--
+    WriteActive --> WriteActive: Unlock()/depth--
+
+    ReadActive --> ReadActive: another goroutine Lock()\nwait as pending writer
+    ReadActive --> ReadActive: another goroutine RLock()\nwait
+    WriteActive --> WriteActive: another goroutine Lock()\nwait
+    WriteActive --> WriteActive: another goroutine RLock()\nwait
+
+    ReadActive --> Error: same goroutine Lock()\nreject read->write upgrade
+    Error --> ReadActive
+```
+
+Behavior notes:
+
+1. `Idle`
+   No goroutine owns the client lock.
+
+2. `ReadActive`
+   A read operation is in progress. Other goroutines must wait. If a writer is already waiting, new readers must also wait.
+
+3. `WriteActive`
+   A write operation is in progress. All other goroutines must wait.
+
+4. Reentrant behavior
+   The owning goroutine may enter the lock again. This is tracked with `depth`.
+
+5. No read-to-write upgrade
+   If the same goroutine already holds `RLock`, calling `Lock` returns `modbus: cannot upgrade read lock to write lock`.
+
+In short, `clientLock` is closer to a reentrant single-owner bus lock with read/write intent markers than to a standard concurrent reader-writer lock.
+
 ### Example
 
 ---

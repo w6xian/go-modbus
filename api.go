@@ -61,4 +61,8 @@ type Client interface {
 	// ReadFIFOQueue reads the contents of a First-In-First-Out (FIFO) queue
 	// of register in a remote device and returns FIFO value register.
 	ReadFIFOQueue(slaveID byte, address uint16) (results []byte, err error)
+	RLock() error
+	RUnlock() error
+	Lock() error
+	Unlock() error
 }
